@@ -47,6 +47,7 @@ def head_up():
 def main():
     file_name = input('введите имя файла исходного текста:')
     file_read(file_name)
+    out_file = open('out_file.txt', 'w')
     for _ in range(10):
         sentences = 2
         head = head_up()
@@ -59,7 +60,8 @@ def main():
                 if sentences >= 5:
                     break
             head = markov[0] + ' ' + markov[-1]
-        print(f"{string}")
+        out_file.write(string + '\n')
+    out_file.close()
 
 
 if __name__ == "__main__":
