@@ -9,10 +9,8 @@ bigrams = list()
 
 
 def file_read(name):
-    global bigrams
-    file = open(name, 'r', encoding="utf-8")
-    text = file.read()
-    file.close()
+    with open(name, 'r', encoding="utf-8") as file:
+        text = file.read()
     bigrams = nltk.WhitespaceTokenizer().tokenize(text)
     bigrams = list(nltk.ngrams(bigrams, 3))
     for ram in bigrams:
@@ -20,16 +18,14 @@ def file_read(name):
 
 
 def markov_func(head):
-    global heads_dict
-    a = Counter(heads_dict[head]).most_common()
-    next_word = a[0][0]
+    next_words = Counter(heads_dict[head]).most_common()
+    next_word = next_words[0][0]
     key = head.split()[-1] + ' ' + next_word
     key = key.split()
     return key
 
 
 def choise_head():
-    global heads_dict
     heads = list(heads_dict.keys())
     head = random.choices(heads)
     return head[0]
@@ -39,7 +35,7 @@ def head_up():
     while True:
         head = choise_head()
         if bool(re.match('^[A-Z]', head)) and not bool(
-                re.match('[A-Za-z|a-z]+[\.|\?|\!]', head)):  # and not bool(re.match('[\.|\?|\!]$', head)):
+                re.match('[A-Za-z|a-z]+[\.|\?|\!]', head)):
             break
     return head
 
